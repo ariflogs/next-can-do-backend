@@ -9,15 +9,15 @@ export async function GET() {
   });
 }
 
-const userCreateSchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-});
-
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    const userCreateSchema = z.object({
+      name: z.string(),
+      email: z.string().email(),
+    });
     const data = userCreateSchema.parse(body);
+
     await prisma.user.create({
       data: {
         name: data.name,
